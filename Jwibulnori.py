@@ -36,7 +36,7 @@ for r in (monsterPosList):
     velo = rand.uniform(0.1,0.7)
     monsterList.append(cylinder(pos=r,color=color.white,a=vec(-acc,0,0), 
                         v=vec(-velo,0,0), radius=0.2,axis=vec(0,1,0), 
-                        is_coll = False, m=default_m*10))
+                        is_coll = False, m=default_m*1.5))
 
 #객체 생성
 bullet = sphere(pos=vec(default_pos,-default_R,0), v = vec(-default_velo,0,0),
@@ -113,9 +113,14 @@ while True:
             r.pos = r.pos + r.v*dt
         #충돌
         if mag(r.pos - bullet.pos) < r.axis.y + bullet.radius and r.visible == True:
-            bullet_v_f = ((bullet.m-e*r.m)*bullet.v + (1+e)*r.m*r.v) / (bullet.m + r.m)
-            r_v_f = ((r.m-e*bullet.m)*r.v + (1+e)*bullet.m*bullet.v) / (bullet.m + r.m)
-            bullet.v = bullet.v + bullet_v_f
+            c = r.pos - bullet.pos
+            bullet_v_c = dot(bullet.v,norm(c))*norm(c) #수평방향 속도
+            bullet_v_p = bullet.v - bullet_v_c #수직방향 속도
+            r_v_c = dot(r.v,norm(c))*norm(c) #수평방향 속도
+            r_v_p = r.v - r_v_c #수직방향 속도
+            v1 = ((bullet.m-e*r.m)*bullet_v_c + (1+e)*r.m*r_v_p) / (bullet.m + r.m)
+            bullet.v = v1 + bullet_v_p
+
             is_collision = True
             r.is_coll = True
             r.visible = False
