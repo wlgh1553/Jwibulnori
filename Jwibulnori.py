@@ -124,7 +124,7 @@ while True:
             is_collision = True
             r.is_coll = True
             r.visible = False
-            print("collision!!", mag(bullet.v))
+            print("collision!!")
             cnt_alive_monster-=1
     
     #종료조건 : 움직이는 몬스터가 없는 경우
