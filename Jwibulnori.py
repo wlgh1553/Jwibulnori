@@ -81,7 +81,6 @@ while True:
         bullet.a = (Fg + drag)/bullet.m
         bullet.v = bullet.v + bullet.a*dt
         bullet.pos = bullet.pos + bullet.v*dt
-        bullet.pos.z=0
 
         #바닥에 떨어지면 없애기
         if bullet.pos.y - bullet.radius <= ground.pos.y or bullet.pos.x > 10 or bullet.pos.x < -10:
